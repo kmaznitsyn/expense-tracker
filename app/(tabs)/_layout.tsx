@@ -1,34 +1,71 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Link, Tabs } from "expo-router";
+import { Button, View, TouchableOpacity } from "react-native";
+import { GlobalStyles } from "../../constants/styles";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
+      initialRouteName="index"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+        headerStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+        },
+        headerTintColor: "white",
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+        },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: "white",
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="recent-expenses"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          headerTitle: "Recent expenses",
+          tabBarLabel: "Recent",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="bitbucket-square" color={color} />
+          ),
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                paddingRight: 10,
+              }}
+            >
+              <Link href="new-expense" asChild>
+                <TouchableOpacity>
+                  <AntDesign name="plus" size={21} color="white" />
+                </TouchableOpacity>
+              </Link>
+            </View>
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="index"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          title: "All Expenses",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome size={28} name="calendar-times-o" color={color} />
+          ),
+          headerRight: () => (
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                paddingRight: 10,
+              }}
+            >
+              <Link href="new-expense" asChild>
+                <TouchableOpacity>
+                  <AntDesign name="plus" size={21} color="white" />
+                </TouchableOpacity>
+              </Link>
+            </View>
           ),
         }}
       />
